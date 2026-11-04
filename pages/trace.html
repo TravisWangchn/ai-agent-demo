@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Super-Agent 工单标准化执行轨迹：按七个可观测层级逐步回放工单从触发、规划、工具调用到汇总交付的完整链路。">
+  <title>执行轨迹 · Super-Agent 工单自动化编排演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='28' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="Super-Agent 工单编排演示首页">
+        <span class="brand__mark" aria-hidden="true">SA</span>
+        <span class="brand__text">
+          <span class="brand__name">Super-Agent 工单编排演示</span>
+          <span class="brand__tagline">全链路可观测教学演示</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span>菜单</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="主导航">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="../index.html">首页</a></li>
+          <li><a class="site-nav__link" href="architecture.html">架构</a></li>
+          <li><a class="site-nav__link" href="demo.html">演示</a></li>
+          <li><a class="site-nav__link" href="trace.html" aria-current="page">轨迹</a></li>
+          <li><a class="site-nav__link" href="rules.html">规则</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main" data-trace-page>
+    <div class="container">
+      <header class="prose">
+        <span class="eyebrow">执行轨迹</span>
+        <h1 class="page-title">一次工单，逐步回放</h1>
+        <p class="lead">这里保存的是标准样例工单的完整执行轨迹：七层可观测日志按时间顺序排列，每一步都有角色、时间戳、输入、输出与决策理由。用回放控制条单步推进，就能看清 Agent 在什么时候做了什么、为什么这么做。</p>
+        <div class="meta-pills" aria-label="轨迹特性">
+          <span class="pill">7 层可观测</span>
+          <span class="pill">单步回放</span>
+          <span class="pill">plan 子任务折叠</span>
+          <span class="pill">异常分支可追溯</span>
+        </div>
+      </header>
+
+      <noscript>
+        <div class="noscript-note" role="note">
+          <p><strong>轨迹回放需要 JavaScript。</strong>本页的回放控制与时间线由原生 ES modules 渲染；启用 JavaScript 并通过静态服务器访问后即可使用。</p>
+          <p>静态信息如下：标准样例工单「feat: 将 ai-agent-demo 重塑为 DSH Super-Agent 工单自动化编排与全链路可观测教学演示站」，来源 GitHub Issue #11，提交者 TravisWangchn，创建时间 2026-11-04 09:40:37 UTC；轨迹覆盖 trigger / plan / tool_call / tool_result / reasoning / branch / summary 七个层级，可逐步回放。</p>
+        </div>
+      </noscript>
+
+      <section class="section" aria-labelledby="ticket-title">
+        <div class="section__head">
+          <h2 class="section__title" id="ticket-title">标准样例工单</h2>
+          <p class="section__hint">数据来自 <code>scripts/trace-data.js</code> 的 <code>SAMPLE_TICKET</code>，与仓库中的快照文件同源</p>
+        </div>
+        <div class="panel trace-host" data-trace-ticket>
+          <p class="trace-placeholder">正在加载工单卡…</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="legend-title">
+        <div class="section__head">
+          <h2 class="section__title" id="legend-title">七层可观测图例</h2>
+          <p class="section__hint">从外部事件到 Agent 推理，再到工具执行与最终汇总，每一步都属于其中一层</p>
+        </div>
+        <div class="trace-host" data-trace-legend>
+          <p class="trace-placeholder">正在加载七层图例…</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="playback-title">
+        <div class="section__head">
+          <h2 class="section__title" id="playback-title">回放控制条</h2>
+          <p class="section__hint">播放会每 1.2 秒推进一步；到末尾自动暂停</p>
+        </div>
+        <div class="panel playback" data-trace-controls>
+          <div class="playback__bar">
+            <button class="button button--primary playback__play" type="button" data-playback-play aria-pressed="false" aria-label="播放自动回放">播放</button>
+            <button class="button button--secondary" type="button" data-playback-prev disabled>上一步</button>
+            <button class="button button--secondary" type="button" data-playback-next>下一步</button>
+            <button class="button button--secondary" type="button" data-playback-reset disabled>重置</button>
+            <span class="playback__count" aria-hidden="true">
+              <span class="playback__count-value" data-playback-count>— / —</span>
+              <span class="playback__count-label">步</span>
+            </span>
+          </div>
+          <label class="playback__seek" for="trace-seek">
+            <span class="playback__seek-label">跳转到某一步</span>
+            <input class="playback__range" id="trace-seek" type="range" min="1" max="1" value="1" step="1" data-playback-range>
+          </label>
+          <div class="playback__progress" data-playback-progress aria-hidden="true">
+            <span class="playback__progress-fill"></span>
+          </div>
+          <p class="playback__hint">拖动滑杆可立即定位到某一步；“重置”回到第 1 步并停止播放。键盘用户可聚焦按钮或滑杆后使用方向键操作。</p>
+          <p class="visually-hidden" role="status" aria-live="polite" data-playback-announcer></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="timeline-title">
+        <div class="section__head">
+          <h2 class="section__title" id="timeline-title">执行时间线</h2>
+          <p class="section__hint">只显示已经回放到的步骤；plan 层子任务可折叠，展开后查看其下挂的工具调用与返回</p>
+        </div>
+        <div class="trace-host trace-host--timeline" data-trace-timeline>
+          <p class="trace-placeholder">正在加载执行轨迹…</p>
+        </div>
+        <noscript>
+          <p class="noscript-note">时间线由 JavaScript 渲染。启用 JavaScript 后，这里会按回放进度展示每一步的 role / timestamp / input / output / reason。</p>
+        </noscript>
+      </section>
+
+      <section class="section" aria-labelledby="guide-title">
+        <div class="section__head">
+          <h2 class="section__title" id="guide-title">字段导读</h2>
+          <p class="section__hint">读一步轨迹，先看角色与时间，再看输入输出，最后用 reason 校验动机</p>
+        </div>
+        <div class="field-guide">
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>role</code><span>角色</span></h3>
+            <p class="field-guide__text">谁在执行或决策。常见取值：<code>orchestrator</code>（编排与拆解）、<code>worker</code>（执行实现）、<code>github</code>（Issue / PR 操作）、<code>shell</code>（命令执行）、<code>filesystem</code>（读写文件）、<code>node-test</code>（测试）与 <code>git</code>（版本操作）。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>timestamp</code><span>时间戳</span></h3>
+            <p class="field-guide__text">这一步实际发生的时刻。页面统一以 <code>YYYY-MM-DD HH:mm:ss UTC</code> 展示，避免本地时区导致截图与复盘不一致。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>input</code><span>输入</span></h3>
+            <p class="field-guide__text">这一步接收的结构化输入。对 <code>tool_call</code> 来说，就是下发给工具的指令原文参数；对 <code>reasoning</code> 来说，是参与判断的上下文与规则命中项。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>output</code><span>输出</span></h3>
+            <p class="field-guide__text">这一步产出的结构化结果。对 <code>tool_result</code> 来说，包含 <code>exitCode</code>、<code>durationMs</code> 与关键输出摘录；对 <code>summary</code> 来说，是产出物清单。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>reason</code><span>决策理由</span></h3>
+            <p class="field-guide__text">为什么做这一步：命中了哪条规则、依据哪些证据、为什么走这条分支。它是消除“黑盒感”的关键字段，任何一步都应能回答“为什么”。</p>
+          </div>
+        </div>
+
+        <div class="source-guide" aria-label="来源区分说明">
+          <article class="source-guide__card source-guide__card--agent">
+            <span class="source-badge source-badge--agent">Agent 推理</span>
+            <h3 class="source-guide__title">Agent 推理 vs 工具执行</h3>
+            <p class="source-guide__text">Agent 推理（<code>agent</code>）产生计划、判断与汇总；工具执行（<code>tool</code>）记录真实下发的命令与原始返回。两类步骤在时间线中以不同颜色的左边框与来源徽标区分，外部事件（<code>event</code>）则单独标识。</p>
+          </article>
+          <article class="source-guide__card source-guide__card--tool">
+            <span class="source-badge source-badge--tool">工具执行</span>
+            <h3 class="source-guide__title">工具返回是原始证据</h3>
+            <p class="source-guide__text">工具步骤展示 <code>input</code> 里的指令原文与 <code>output</code> 里的原始 payload。它们不做二次包装，便于直接对照命令、退出码与测试输出复盘。</p>
+          </article>
+          <article class="source-guide__card source-guide__card--event">
+            <span class="source-badge source-badge--event">外部事件</span>
+            <h3 class="source-guide__title">事件是链路起点</h3>
+            <p class="source-guide__text"><code>trigger</code> 层记录工单来源、提交者与原始文本，是整条轨迹的输入证据；后续判断都应以它为准，而不是凭记忆复述。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="note"><strong>下一步：</strong>回到演示页查看标准样例工单与轨迹摘要，或到架构页了解七层轨迹在整体架构中的位置。</p>
+        <div class="button-row">
+          <a class="button button--primary" href="demo.html">查看标准样例工单</a>
+          <a class="button button--secondary" href="architecture.html">阅读整体架构</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>Super-Agent 工单自动化编排演示 · 零依赖、零构建的教学演示项目</p>
+      <p class="site-footer__meta">
+        <span>MIT License</span>
+        <span>无需框架，无需打包</span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="../scripts/main.js"></script>
+  <script type="module" src="../scripts/trace-page.js"></script>
+</body>
+</html>

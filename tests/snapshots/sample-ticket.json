@@ -1,0 +1,15 @@
+{
+  "id": "issue-11",
+  "source": "github",
+  "sourceLabel": "GitHub Issue",
+  "number": 11,
+  "title": "feat: 将 ai-agent-demo 重塑为 DSH Super-Agent 工单自动化编排与全链路可观测教学演示站",
+  "author": "TravisWangchn",
+  "createdAt": "2026-11-04T09:40:37.000Z",
+  "url": "https://github.com/TravisWangchn/ai-agent-demo/issues/11",
+  "labels": [
+    "feature"
+  ],
+  "state": "open",
+  "body": "当前仓库只演示硬编码的规则说明：scripts/demo.js 的 TASKS 与 scripts/rules.js 的 RULES 均为写死常量，simulateTask() 是浏览器内的纯函数，仓库中不存在对 GitHub 或后端的真实调用。需要把项目重塑为「Super-Agent 工单自动化编排演示」：新增七层可观测执行轨迹（trigger、plan、tool_call、tool_result、reasoning、branch、summary），支持单步回放与子任务折叠；测试同时产出标准样例工单与标准执行轨迹快照，CI 在单测后生成快照并校验一致性，防止文档与实现漂移。技术约束：零依赖、零构建、ES modules + node:test、保留原有目录结构。"
+}

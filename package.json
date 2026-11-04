@@ -1,11 +1,13 @@
 {
-  "name": "ai-agent-demo",
+  "name": "super-agent-ticket-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "零依赖、零构建的多页面 AI Agent 教学演示站",
+  "description": "Super-Agent 工单自动化编排与全链路可观测教学演示站",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "snapshots": "node scripts/generate-snapshots.js",
+    "serve": "node scripts/serve.js"
   },
   "engines": {
     "node": ">=20"

@@ -1,11 +1,11 @@
 /**
- * 策略规则数据与规则表渲染。
+ * Super-Agent 工单自动化编排演示的策略规则数据与规则表渲染。
  *
  * 数据与展示分离：`RULES` 只描述规则，`renderRulesTable` 负责生成 DOM，
  * 因此本模块可以在浏览器外被 node:test 直接导入和校验。
  */
 
-/** 演示中支持的任务类型，同时用于规则页的筛选说明。 */
+/** 策略规则支持的任务类型，规则页与标准样例的“教学对照”模拟器共用。 */
 export const TASK_TYPES = {
   copy: "抄写修正",
   visual: "视觉调整",
@@ -14,7 +14,7 @@ export const TASK_TYPES = {
 };
 
 /**
- * 本项目演示的策略规则。
+ * Super-Agent 工单自动化编排演示使用的策略规则。
  *
  * requirements 是接受任务前必须满足的条件；演示页会用任务的 facts
  * 逐项检查这些条件，全部满足才会进入执行阶段。
@@ -26,7 +26,7 @@ export const RULES = [
     appliesTo: "copy",
     scenario:
       "只涉及已确定的文案、标题或术语替换，目标文字与替换内容都明确。",
-    example: "把首页标题中的「AI Agent Demos」改为「AI Agent Demo」。",
+    example: "把首页标题中的「工单编排演示」改为「工单自动化编排演示」。",
     requirements: [
       { id: "exactTarget", label: "指出要修改的具体文字" },
       { id: "replacement", label: "给出替换后的文字" },

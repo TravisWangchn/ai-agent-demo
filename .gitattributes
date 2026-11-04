@@ -1,0 +1,18 @@
+# 快照文件必须以 LF 落库，保证跨平台逐字节一致。
+# Windows 上 core.autocrlf=true 会把工作区的 LF 改写成 CRLF，
+# 导致「代码生成结果（LF）」与「已提交快照（CRLF）」在 CI 中不一致。
+tests/snapshots/*.json text eol=lf
+
+# 其余文本文件统一按 LF 检出，避免不同平台的换行差异污染 diff 与快照比对。
+*.html text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.svg text eol=lf
+*.txt text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
