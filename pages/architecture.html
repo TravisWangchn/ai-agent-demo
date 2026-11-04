@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="拆解 AI Agent 的五阶段工作流：触发、评估、决策、执行与交付，以及每个阶段回答的问题和产出。">
+  <title>Agent 架构 · AI Agent 教学演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="AI Agent Demo 首页">
+        <span class="brand__mark" aria-hidden="true">AI</span>
+        <span class="brand__text">
+          <span class="brand__name">AI Agent Demo</span>
+          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span>菜单</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="主导航">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="../index.html">首页</a></li>
+          <li><a class="site-nav__link" href="architecture.html" aria-current="page">架构</a></li>
+          <li><a class="site-nav__link" href="demo.html">演示</a></li>
+          <li><a class="site-nav__link" href="rules.html">规则</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <div class="container">
+      <header class="prose">
+        <span class="eyebrow">Agent 架构</span>
+        <h1 class="page-title">一个任务，五个阶段</h1>
+        <p class="lead">Agent 的工作不是“收到请求就直接改代码”。它先确认请求来自哪里、是否被规则授权，再判断信息是否足够，最后才进入执行与交付。下面这张流程图是整站的结构基础。</p>
+      </header>
+
+      <section class="section" aria-labelledby="flow-title">
+        <div class="section__head">
+          <h2 class="section__title" id="flow-title">五阶段工作流</h2>
+          <p class="section__hint">每个阶段都有明确的输入、判断与产物</p>
+        </div>
+        <ol class="workflow">
+          <li class="workflow__item">
+            <span class="workflow__step">STEP 01</span>
+            <h3 class="workflow__title">触发</h3>
+            <p class="workflow__text">Issue、评论或消息进入系统，记录原始来源与请求文本。</p>
+            <span class="workflow__arrow" aria-hidden="true">→</span>
+          </li>
+          <li class="workflow__item">
+            <span class="workflow__step">STEP 02</span>
+            <h3 class="workflow__title">评估</h3>
+            <p class="workflow__text">读取有限的相关上下文，匹配策略规则，确认范围与前提。</p>
+            <span class="workflow__arrow" aria-hidden="true">→</span>
+          </li>
+          <li class="workflow__item">
+            <span class="workflow__step">STEP 03</span>
+            <h3 class="workflow__title">决策</h3>
+            <p class="workflow__text">依据接受条件判断：接受、要求补充、忽略还是停止。</p>
+            <span class="workflow__arrow" aria-hidden="true">→</span>
+          </li>
+          <li class="workflow__item">
+            <span class="workflow__step">STEP 04</span>
+            <h3 class="workflow__title">执行</h3>
+            <p class="workflow__text">在独立分支完成局部改动，补测试与文档，并进行自检。</p>
+            <span class="workflow__arrow" aria-hidden="true">→</span>
+          </li>
+          <li class="workflow__item">
+            <span class="workflow__step">STEP 05</span>
+            <h3 class="workflow__title">交付</h3>
+            <p class="workflow__text">提交可审阅的 PR，附验证方式与必要证据，等待评审。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" aria-labelledby="detail-title">
+        <div class="section__head">
+          <h2 class="section__title" id="detail-title">每个阶段在做什么</h2>
+          <p class="section__hint">关键在于：前三个阶段只读，后两个阶段才产生改动</p>
+        </div>
+        <ol class="stage-list">
+          <li class="stage-card">
+            <span class="stage-card__index" aria-hidden="true">01</span>
+            <div class="stage-card__body">
+              <h3 class="stage-card__title">触发：先确认“谁在什么场景下提出了什么”</h3>
+              <p class="stage-card__text">请求可能来自 GitHub Issue、PR 评论、聊天消息或定时任务。Agent 记录来源、原始文本和上下文指针，但不会把“收到请求”当成“获得任意改动授权”。来源本身只决定如何回复，不决定可以改什么。</p>
+              <div class="stage-card__meta">
+                <span class="pill">输入：Issue / 评论 / 消息</span>
+                <span class="pill">产物：触发记录</span>
+              </div>
+            </div>
+          </li>
+          <li class="stage-card">
+            <span class="stage-card__index" aria-hidden="true">02</span>
+            <div class="stage-card__body">
+              <h3 class="stage-card__title">评估：只读上下文，不做修改</h3>
+              <p class="stage-card__text">Agent 收集完成判断所需的最小上下文：仓库约定、涉及文件、历史决策和请求中已确定的信息。随后匹配策略规则，确认任务属于哪一类、授权边界在哪里、是否缺少必要前提。评估阶段不写文件，也不提前开始实现。</p>
+              <div class="stage-card__meta">
+                <span class="pill">输入：请求 + 仓库上下文</span>
+                <span class="pill">产物：规则匹配与范围判断</span>
+              </div>
+            </div>
+          </li>
+          <li class="stage-card">
+            <span class="stage-card__index" aria-hidden="true">03</span>
+            <div class="stage-card__body">
+              <h3 class="stage-card__title">决策：说明依据，而不是只说结论</h3>
+              <p class="stage-card__text">决策可能是接受、要求补充信息、忽略或停止。每个结论都要能回答“依据哪条规则、为什么”。如果请求缺少可执行的前提，正确动作是退回补充，而不是替请求人选择设计方向。</p>
+              <div class="stage-card__meta">
+                <span class="pill">输入：规则 + 接受条件</span>
+                <span class="pill">产物：决策与理由</span>
+              </div>
+            </div>
+          </li>
+          <li class="stage-card">
+            <span class="stage-card__index" aria-hidden="true">04</span>
+            <div class="stage-card__body">
+              <h3 class="stage-card__title">执行：小步改动，随时可验证</h3>
+              <p class="stage-card__text">在独立分支完成局部修改，同时补齐测试、文档和必要的验证脚本。执行中如果发现需要改变公共接口、模块职责或产品方向，应暂停并上报；不能把“实现方便”当成扩大范围的授权。</p>
+              <div class="stage-card__meta">
+                <span class="pill">输入：已接受的规格</span>
+                <span class="pill">产物：代码、测试、自检结果</span>
+              </div>
+            </div>
+          </li>
+          <li class="stage-card">
+            <span class="stage-card__index" aria-hidden="true">05</span>
+            <div class="stage-card__body">
+              <h3 class="stage-card__title">交付：把判断变成可复核的证据</h3>
+              <p class="stage-card__text">交付物是一个可审阅的 PR：改了什么、为什么改、如何验证，以及用户能观察到的结果。视觉变化附 Before/After 截图。CI 与人类评审负责最终把关，Agent 不绕过评审，也不自行合并。</p>
+              <div class="stage-card__meta">
+                <span class="pill">输入：可运行的改动</span>
+                <span class="pill">产物：PR + 验证证据</span>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" aria-labelledby="principles-title">
+        <div class="section__head">
+          <h2 class="section__title" id="principles-title">贯穿全流程的三条原则</h2>
+        </div>
+        <div class="principle-grid">
+          <article class="principle">
+            <h3 class="principle__title">规则先于动作</h3>
+            <p class="principle__text">先匹配规则、确认授权边界，再决定是否执行。没有明确规则时，默认不扩大范围。</p>
+          </article>
+          <article class="principle">
+            <h3 class="principle__title">证据先于声明</h3>
+            <p class="principle__text">测试输出、可复现步骤和截图，比一句“已完成”更有价值。结论必须能被独立复核。</p>
+          </article>
+          <article class="principle">
+            <h3 class="principle__title">人类保留最终决定</h3>
+            <p class="principle__text">合并、发布和方向选择由人负责。Agent 可以准备充分材料，但不能替人做最终判断。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="note"><strong>把流程跑一遍：</strong>打开交互演示，选择“抄写修正”或“视觉调整”，观察同一个五阶段流程如何给出完全不同的决策。</p>
+        <div class="button-row">
+          <a class="button button--primary" href="demo.html">运行交互演示</a>
+          <a class="button button--secondary" href="rules.html">查看策略规则</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p class="site-footer__meta">
+        <span>MIT License</span>
+        <span>无需框架，无需打包</span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="../scripts/main.js"></script>
+</body>
+</html>

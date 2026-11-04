@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="交互式 AI Agent 流程模拟器：选择抄写修正、视觉调整、Bug 修复或新增功能，查看规则匹配、接受判定与最终决策。">
+  <title>交互演示 · AI Agent 教学演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="AI Agent Demo 首页">
+        <span class="brand__mark" aria-hidden="true">AI</span>
+        <span class="brand__text">
+          <span class="brand__name">AI Agent Demo</span>
+          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span>菜单</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="主导航">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="../index.html">首页</a></li>
+          <li><a class="site-nav__link" href="architecture.html">架构</a></li>
+          <li><a class="site-nav__link" href="demo.html" aria-current="page">演示</a></li>
+          <li><a class="site-nav__link" href="rules.html">规则</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <div class="container">
+      <header class="prose">
+        <span class="eyebrow">交互演示</span>
+        <h1 class="page-title">同一个流程，四种不同的决策</h1>
+        <p class="lead">选择一个任务类型，模拟器会展示完整的五阶段：触发请求、匹配规则、逐项检查接受条件、给出决策，最后说明执行与交付动作。所有逻辑都在浏览器本地运行。</p>
+      </header>
+
+      <section class="section panel" data-demo aria-labelledby="simulator-title">
+        <div class="section__head">
+          <h2 class="section__title" id="simulator-title">Agent 流程模拟器</h2>
+          <p class="section__hint">点击任务类型开始；再次点击其他类型可对比结果</p>
+        </div>
+
+        <div class="task-grid" role="group" aria-label="选择任务类型">
+          <button class="task-button" type="button" data-task-id="copy" aria-pressed="false">
+            <span class="task-button__label">抄写修正</span>
+            <span class="task-button__hint">文字明确、范围最小</span>
+          </button>
+          <button class="task-button" type="button" data-task-id="visual" aria-pressed="false">
+            <span class="task-button__label">视觉调整</span>
+            <span class="task-button__hint">方向尚未量化的视觉想法</span>
+          </button>
+          <button class="task-button" type="button" data-task-id="bugfix" aria-pressed="false">
+            <span class="task-button__label">Bug 修复</span>
+            <span class="task-button__hint">带复现步骤的缺陷报告</span>
+          </button>
+          <button class="task-button" type="button" data-task-id="feature" aria-pressed="false">
+            <span class="task-button__label">新增功能</span>
+            <span class="task-button__hint">用户、场景与完成标准明确</span>
+          </button>
+        </div>
+
+        <div class="simulator" aria-labelledby="sim-title">
+          <div class="simulator__head">
+            <h3 class="simulator__title" id="sim-title">执行过程</h3>
+            <span class="badge badge--idle" data-sim-status>等待触发</span>
+          </div>
+          <div class="simulator__body">
+            <p class="sim-empty" data-sim-empty>选择上方任一任务类型，查看规则匹配、接受判定与最终决策。</p>
+            <div data-sim-output hidden></div>
+            <p class="visually-hidden" role="status" aria-live="polite" data-sim-announcer></p>
+          </div>
+        </div>
+
+        <p class="note"><strong>注意：</strong>“视觉调整”会显示“暂不接受”，这是刻意设计的教学案例。请求只说“更好看一点”，缺少具体页面与元素、目标状态和验收方式；Agent 应要求补充规格，而不是自行替人做设计决策。</p>
+      </section>
+
+      <section class="section prose" aria-labelledby="reading-title">
+        <h2 class="section__title" id="reading-title">怎么读这个演示</h2>
+        <ol>
+          <li><strong>规则匹配</strong>：任务类型决定它属于哪条策略，而不是由 Agent 临时发明规则。</li>
+          <li><strong>接受判定</strong>：逐项检查规则要求的信息。任何一项缺失，任务都会停在决策阶段。</li>
+          <li><strong>决策与产出</strong>：接受后才会创建分支、写代码和测试；被拒绝时只产出一条具体的补充规格请求。</li>
+          <li><strong>对比结果</strong>：依次点击四个按钮，注意“视觉调整”和另外三个任务在第三步出现的差异。</li>
+        </ol>
+        <p>规则本身在 <a href="rules.html">策略规则页</a> 中完整列出；五阶段的结构说明在 <a href="architecture.html">架构页</a>。</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p class="site-footer__meta">
+        <span>MIT License</span>
+        <span>无需框架，无需打包</span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="../scripts/main.js"></script>
+  <script type="module" src="../scripts/demo.js"></script>
+</body>
+</html>

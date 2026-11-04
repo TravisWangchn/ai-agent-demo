@@ -3,18 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Agent Demo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="零依赖、零构建的 AI Agent 教学演示站：用四个页面拆解 Agent 如何触发、评估、决策、执行与交付。">
+  <title>AI Agent 教学演示 · 从 Issue 到 PR</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <h1>计数器 Demo</h1>
-    <p class="counter" id="counter">0</p>
-    <div class="buttons">
-      <button onclick="decrement()">-</button>
-      <button onclick="increment()">+</button>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="AI Agent Demo 首页">
+        <span class="brand__mark" aria-hidden="true">AI</span>
+        <span class="brand__text">
+          <span class="brand__name">AI Agent Demo</span>
+          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span>菜单</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="主导航">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html" aria-current="page">首页</a></li>
+          <li><a class="site-nav__link" href="pages/architecture.html">架构</a></li>
+          <li><a class="site-nav__link" href="pages/demo.html">演示</a></li>
+          <li><a class="site-nav__link" href="pages/rules.html">规则</a></li>
+        </ul>
+      </nav>
     </div>
-  </div>
-  <script src="script.js"></script>
+  </header>
+
+  <main id="main" class="site-main">
+    <div class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__content">
+          <span class="eyebrow">AI Agent 教学演示</span>
+          <h1 class="display-title" id="hero-title">从一个 Issue，看懂 AI Agent 如何工作</h1>
+          <p class="lead">这个项目把一次真实的 Agent 工作拆成五个阶段：触发、评估、决策、执行、交付。读页面、跑演示、看规则，就能理解它如何判断一个请求该不该做、要做到什么程度。</p>
+          <div class="button-row">
+            <a class="button button--primary" href="pages/demo.html">运行交互演示</a>
+            <a class="button button--secondary" href="pages/architecture.html">阅读工作流程</a>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <span class="stat__value">5</span>
+              <span class="stat__label">个清晰阶段</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">4</span>
+              <span class="stat__label">类教学任务</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">0</span>
+              <span class="stat__label">运行时依赖</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero__art" aria-label="Agent 工作流程概览">
+          <p class="hero__art-title">Agent Workflow</p>
+          <ol class="mini-flow">
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">01</span>
+              <span>触发 · 收到 Issue 或消息</span>
+            </li>
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">02</span>
+              <span>评估 · 收集必要上下文</span>
+            </li>
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">03</span>
+              <span>决策 · 匹配规则并判断</span>
+            </li>
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">04</span>
+              <span>执行 · 分支、代码、测试</span>
+            </li>
+            <li class="mini-flow__item mini-flow__item--accent">
+              <span class="mini-flow__index" aria-hidden="true">05</span>
+              <span>交付 · PR、证据、复核</span>
+            </li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="section" aria-labelledby="explore-title">
+        <div class="section__head">
+          <h2 class="section__title" id="explore-title">按页面开始探索</h2>
+          <p class="section__hint">三个页面分别回答：怎么工作、如何决策、遵循什么规则。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <span class="tag">01 · 流程</span>
+            <h3 class="card__title">Agent 架构</h3>
+            <p class="card__text">拆解触发 → 评估 → 决策 → 执行 → 交付五个阶段，说明每个阶段回答什么问题、输入和产出分别是什么。</p>
+            <a class="card__link" href="pages/architecture.html">查看工作流程</a>
+          </article>
+          <article class="card">
+            <span class="tag">02 · 交互</span>
+            <h3 class="card__title">流程模拟器</h3>
+            <p class="card__text">点击四类任务，实时查看 Agent 匹配哪条规则、是否满足接受条件，以及最终产出什么决策。</p>
+            <a class="card__link" href="pages/demo.html">运行演示</a>
+          </article>
+          <article class="card">
+            <span class="tag">03 · 规则</span>
+            <h3 class="card__title">策略规则表</h3>
+            <p class="card__text">每条规则都包含适用场景、示例、接受条件与产出；规则数据与页面渲染分离，便于维护。</p>
+            <a class="card__link" href="pages/rules.html">查看规则表</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split" aria-labelledby="quickstart-title">
+        <div>
+          <h2 class="section__title" id="quickstart-title">本地运行与测试</h2>
+          <p class="section__hint">项目保持零依赖、零构建。页面脚本使用原生 ES modules，请通过静态服务器访问。</p>
+          <div class="button-row">
+            <a class="button button--primary" href="pages/demo.html">先看看演示</a>
+          </div>
+          <pre><code># 启动本地静态服务器（任选一种）
+python -m http.server 8000
+npx serve .
+
+# 运行单元测试
+npm test</code></pre>
+          <p class="note">现代浏览器会阻止 <code>file://</code> 下加载 ES module，因此导航菜单、规则表和交互演示需要静态服务器；直接双击 <code>index.html</code> 仍可查看 HTML 与样式。</p>
+        </div>
+        <div class="panel">
+          <h3 class="card__title">项目结构</h3>
+          <pre class="file-tree">├── index.html
+├── pages/
+│   ├── architecture.html
+│   ├── demo.html
+│   └── rules.html
+├── styles/main.css
+├── scripts/
+│   ├── main.js
+│   ├── demo.js
+│   └── rules.js
+├── tests/
+│   ├── demo.test.js
+│   └── rules.test.js
+├── .github/workflows/ci.yml
+├── package.json
+├── README.md
+├── LICENSE
+└── .gitignore</pre>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p class="site-footer__meta">
+        <span>MIT License</span>
+        <span>无需框架，无需打包</span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="scripts/main.js"></script>
 </body>
 </html>
