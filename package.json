@@ -1,0 +1,14 @@
+{
+  "name": "ai-agent-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "零依赖、零构建的多页面 AI Agent 教学演示站",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
