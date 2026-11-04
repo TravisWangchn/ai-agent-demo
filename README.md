@@ -1,26 +1,44 @@
-# AI Agent Demo
+# Super-Agent 工单自动化编排演示
 
-**一个零依赖、零构建的多页面静态教学站，用四个页面拆解 AI Agent 如何把一条请求变成可审阅的改动：触发 → 评估 → 决策 → 执行 → 交付。**
+> 仓库名仍为 `ai-agent-demo`（GitHub 仓库链接不变）；`package.json` 的包名已改为 `super-agent-ticket-demo`。本项目是零依赖、零构建的多页面静态教学演示站。
+
+**把一次真实工单（GitHub Issue #11）的执行过程拆成七个可观测层级，用 44 步标准轨迹、可逐步回放的时间线和逐字节可复现的快照，回答“谁在什么时候、为什么、做了什么、得到什么”。** 目标不是“功能跑通”，而是**可阅读、可追溯、可复盘**。
 
 ## 这个项目演示什么
 
-仓库里的页面不是产品宣传页，而是一份可以点击、可以运行的教学材料：
+- **首页**（`index.html`）：整体入口，串起七层轨迹、标准样例、回放能力与五个页面的学习路径。
+- **架构页**（`pages/architecture.html`）：五阶段工作流、DSH Super-Agent 调用链路、工具与能力依赖关系，以及七层轨迹与架构节点的映射。
+- **演示页**（`pages/demo.html`）：标准样例工单与标准轨迹摘要（层覆盖、44 步、异常分支、最终产出），并保留四类任务的简化模拟器作为**教学对照**（它不执行真实工具调用）。
+- **轨迹页**（`pages/trace.html`）：七层图例、回放控制条与完整时间线；支持播放 / 暂停、上一步 / 下一步、重置、拖动 seek，以及 plan 子任务折叠。
+- **规则页**（`pages/rules.html`）：四类任务的策略规则、接受条件与执行 / 交付产出。
 
-- **架构页**说明 Agent 的五个工作阶段，以及每个阶段回答的问题和产物。
-- **演示页**提供四类任务（抄写修正、视觉调整、Bug 修复、新增功能），点击后实时展示规则匹配、接受条件检查与最终决策。
-- **规则页**列出每条策略规则的适用场景、示例、接受条件与执行/交付产出。
-- **首页**给出整体介绍和导航入口。
+完整使用说明见 **[docs/guide.md](docs/guide.md)**（整体架构 / 页面模块与字段语义 / 运行教程 / 扩展开发 / 调试方案）。
 
-演示刻意保留了一个“不被接受”的案例：只说“把页面做得更好看一点”的视觉请求，缺少具体元素、目标状态和验收方式，因此会停在决策阶段、要求补充规格，而不是让 Agent 自行发挥。这是本项目想表达的核心边界。
+## 标准样例与关键数字
+
+标准样例工单来自 GitHub Issue #11（`https://github.com/TravisWangchn/ai-agent-demo`，提交者 `TravisWangchn`，创建于 `2026-11-04T09:40:37.000Z`）。标准执行轨迹覆盖完整闭环：Issue 触发 → 规则评估 → plan 拆解 → 工具调用 → 页面与文档 → 快照与 CI → 提交分支 → 创建 PR → CI 校验 → 汇总。
+
+| 指标 | 值 |
+| --- | --- |
+| 轨迹总步数 | **44 步**（`step-01` … `step-44`，`seq` 连续） |
+| 七层覆盖 | `trigger` 1 · `plan` 1 · `tool_call` 18 · `tool_result` 18 · `reasoning` 3 · `branch` 2 · `summary` 1 |
+| plan 子任务 | **7 个**（P1 确认基线 → P2 读取契约与现有实现 → P3 实现轨迹数据与回放模块 → P4 实现轨迹页面与样式 → P5 编写使用文档与 README → P6 生成标准快照并接入 CI → P7 提交分支、创建 PR 并校验 CI） |
+| 分支 | **2 个**：`step-27` 异常分支（`snapshot-missing`，`step-26` → `step-28`）与 `step-34` 正常分支（`step-33` → `step-35`） |
+| 时间跨度 | `2026-11-04T09:40:37.000Z` → `2026-11-04T09:47:20.000Z` |
+| 测试 | `npm test` 运行 4 个测试文件、**36 个测试用例** |
+| 标准快照 | `tests/snapshots/sample-ticket.json`、`tests/snapshots/sample-trace.json` |
+
+标准轨迹第 26 步保留了一次真实的测试失败（缺少已提交快照），第 27 步的异常分支记录 `errorType` 与 `handling`，第 28～33 步补生成快照并重跑测试收敛。这条失败不是瑕疵，而是演示“异常如何被判定与处置”的教学材料。
 
 ## 页面
 
 | 页面 | 路径 | 内容 |
 | --- | --- | --- |
-| 首页 | `index.html` | 项目介绍、三页导航、本地运行与测试入口 |
-| 架构 | `pages/architecture.html` | 五阶段工作流与三条原则 |
-| 交互演示 | `pages/demo.html` | 四类任务的规则匹配与决策模拟器 |
-| 策略规则 | `pages/rules.html` | 规则表（由 `scripts/rules.js` 渲染） |
+| 首页 | `index.html` | 七层轨迹总览、标准样例入口、回放能力、项目结构与命令 |
+| 架构 | `pages/architecture.html` | 五阶段工作流 + DSH 调用链路 + 工具依赖表 + 七层映射 |
+| 演示 | `pages/demo.html` | 标准样例工单、标准轨迹摘要、四类任务的简化模拟器 |
+| 轨迹 | `pages/trace.html` | 七层图例、回放控制条、执行时间线、字段导读 |
+| 规则 | `pages/rules.html` | 策略规则表（由 `scripts/rules.js` 渲染） |
 
 ## 目录结构
 
@@ -29,16 +47,30 @@
 ├── pages/
 │   ├── architecture.html
 │   ├── demo.html
+│   ├── trace.html
 │   └── rules.html
 ├── styles/
-│   └── main.css
+│   └── main.css              # 全站样式与 CSS 变量（含轨迹页组件样式）
 ├── scripts/
-│   ├── main.js          # 导航交互
-│   ├── demo.js          # 流程模拟器（含可测试的纯逻辑）
-│   └── rules.js         # 规则数据与规则表渲染
+│   ├── main.js               # 全站导航交互
+│   ├── demo.js               # 四类任务的简化模拟器（含可测试纯逻辑）
+│   ├── rules.js              # 规则数据与规则表渲染
+│   ├── trace-data.js         # 七层 schema、SAMPLE_TICKET、44 步 SAMPLE_TRACE、查询函数
+│   ├── trace-playback.js     # 回放状态机（纯逻辑，不创建定时器）
+│   ├── trace-render.js       # 轨迹 DOM 渲染（工单卡 / 图例 / 步骤 / 时间线 / 摘要）
+│   ├── trace-page.js         # 轨迹页浏览器入口（绑定控制条、驱动自动播放）
+│   ├── generate-snapshots.js # 从 SAMPLE_* 生成标准快照
+│   └── serve.js              # 零依赖静态服务器（node:http + node:fs）
 ├── tests/
 │   ├── demo.test.js
-│   └── rules.test.js
+│   ├── rules.test.js
+│   ├── trace.test.js
+│   ├── snapshots.test.js
+│   └── snapshots/
+│       ├── sample-ticket.json
+│       └── sample-trace.json
+├── docs/
+│   └── guide.md              # 完整使用说明（五个章节）
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
@@ -50,64 +82,66 @@
 
 ## 本地运行
 
-页面脚本使用原生 ES modules。现代浏览器出于安全限制，会阻止 `file://` 协议加载模块，因此**完整交互需要通过静态服务器访问**。
-
-### 直接打开
-
-直接双击 `index.html` 可以查看页面内容与样式；由于上述模块限制，导航折叠、规则表渲染和交互演示不会执行。这是浏览器行为，不是项目缺少构建步骤。
-
-### 使用 npx（无需安装依赖）
+需要 Node.js 20 或更高版本（`package.json` 的 `engines.node` 为 `>=20`，CI 使用 `lts/*`）。
 
 ```bash
-npx --yes serve .
+npm run serve
 ```
 
-命令会启动一个静态服务器并打印访问地址（通常是 `http://localhost:3000`）。首次运行时 `npx` 会临时下载 `serve`，不会写入本项目依赖。
+`scripts/serve.js` 是用 `node:http` + `node:fs` 实现的零依赖静态服务器，默认监听 `http://127.0.0.1:8000/`，目录请求会返回该目录下的 `index.html`，并带有正确的 MIME 与路径穿越防护。
 
-也可以只运行 `npx serve .`，按提示确认安装。
+- 自定义端口：`PORT=9000 npm run serve`（Windows PowerShell 可用 `$env:PORT=9000; npm run serve`）。
+- 启动后打开 <http://127.0.0.1:8000/>；对应页面路径为 `pages/architecture.html`、`pages/demo.html`、`pages/trace.html`、`pages/rules.html`。
+- 页面脚本是原生 ES modules。现代浏览器会阻止 `file://` 加载模块，因此**完整交互必须通过静态服务器访问**；直接双击 `index.html` 只能看到 HTML 与样式。任何静态文件服务器（Python、Nginx、Caddy 等）也可以，项目不依赖特定服务器。
 
-### 使用任意静态服务器
-
-例如 Python 自带的服务器：
-
-```bash
-python -m http.server 8000
-```
-
-然后访问 <http://localhost:8000>。任何静态文件服务器（Nginx、Caddy、`http-server` 等）都可以，项目不依赖特定服务器。
-
-## 运行测试
-
-需要 Node.js 20 或更高版本（CI 使用 `lts/*`）。测试只依赖 Node 内置的 `node:test` 与 `node:assert`，不安装任何第三方包。
+## 测试与快照
 
 ```bash
+# 运行全部测试（node:test；4 个测试文件、36 个用例）
 npm test
+
+# 从 SAMPLE_TICKET / SAMPLE_TRACE 重新生成标准快照
+npm run snapshots
 ```
 
-测试覆盖两条路径：
+`npm test` 覆盖数据契约与行为：七层顺序固定、44 步的 `seq` 连续且时间戳非递减、`plan` 子任务依赖合法且无环、`tool_call` 携带逐字参数、`tool_result` 携带退出码 / 耗时 / 原始输出、正常与异常分支字段完整、`summary` 含产出物与后续动作，以及 `TracePlayback` 的播放 / 暂停 / 重置 / seek 夹紧 / 订阅 / 边界行为。现有 `tests/demo.test.js` 与 `tests/rules.test.js` 也保持通过。
 
-- `tests/rules.test.js`：规则数据完整性——必填字段、唯一 id、任务类型覆盖、接受条件结构，以及未知类型的处理。
-- `tests/demo.test.js`：模拟器的决策逻辑——条件齐全的任务被接受并给出执行/交付动作；缺少规格的视觉任务被暂不接受并列出缺失项；未知任务明确报错。
+`npm test` 中的 `tests/snapshots.test.js` 会**先**把已提交快照与当前代码生成结果逐字节比较，通过后才调用 `writeSnapshots()` 落库；因此修改样例数据后必须显式运行 `npm run snapshots` 并提交差异，测试不会在比较失败时悄悄覆盖快照。
 
-CI 配置在 `.github/workflows/ci.yml`，在 `push` 与 `pull_request` 时使用 `lts/*` 运行 `npm test`。
+CI 配置在 `.github/workflows/ci.yml`（`push` / `pull_request`，`ubuntu-latest`）：
 
-## 这个 Agent 演示项目是如何工作的
+1. `Run unit tests` → `npm test`
+2. `Generate demo snapshots` → `npm run snapshots`
+3. `Verify snapshots are committed` → `git diff --exit-code -- tests/snapshots`
 
-1. **触发**：Issue、评论或消息进入系统，记录来源与原始请求。收到请求只代表“有人提出了问题”，不代表获得任意改动授权。
-2. **评估**：读取最小必要上下文，匹配策略规则，确认范围与前提。评估阶段只读，不修改代码。
-3. **决策**：逐项检查规则的接受条件。全部满足才接受；缺少信息就要求补充，并说明缺什么。
-4. **执行**：在独立分支完成局部改动，补测试与文档，自检结果。发现需要变更公共接口或产品方向时暂停上报。
-5. **交付**：提交可审阅的 PR，附验证方式与必要的视觉证据；CI 和人类评审负责最终把关，Agent 不绕过评审。
+第 3 步失败即说明文档 / 数据与实现已经漂移，必须重新生成并提交快照。
 
-打开 `pages/demo.html`，依次点击四个任务按钮，可以看到同一套流程如何因为“信息是否齐全”而走向接受或退回。
+## 七层轨迹与快照一致性机制
+
+七层定义在 `scripts/trace-data.js` 的 `TRACE_LAYERS` 中，顺序固定：
+
+`trigger`（工单原始输入）→ `plan`（任务拆解规划）→ `tool_call`（工具调用请求）→ `tool_result`（工具返回 Payload）→ `reasoning`（Agent 决策推理）→ `branch`（分支跳转）→ `summary`（最终汇总输出）。
+
+每一步都是**结构化对象**，至少包含 `role`、`timestamp`、`input`、`output`、`reason` 五个字段；`plan` 步骤额外含 `plan.subtasks`，归属于某个子任务的步骤带 `planStepId` / `subtaskId`，`branch` 步骤带 `branch` 对象，`summary` 步骤带 `artifacts` / `nextActions`。来源分三类：`agent`（Agent 推理）、`tool`（工具执行）、`event`（外部事件）。
+
+数据流是一致的单一来源：
+
+1. `scripts/trace-data.js` 定义 `SAMPLE_TICKET` / `SAMPLE_TRACE`；
+2. `scripts/trace-render.js` 与 `scripts/trace-page.js` 在浏览器渲染 / 回放同一份数据；
+3. `scripts/generate-snapshots.js` 从同一份常量生成 `tests/snapshots/*.json`；
+4. `tests/snapshots.test.js` 逐字节校验快照，CI 再用 `git diff` 确认快照已随提交落库。
+
+因此任何对样例轨迹的改动都必须同步更新快照，否则 `npm test` 或 CI 会失败——这正是防止“文档与实现漂移”的机制。
 
 ## 技术约束
 
-- 纯 HTML + CSS + 原生 JavaScript（ES modules），无框架、无打包工具、无运行时依赖。
-- 所有配色与间距集中在 `styles/main.css` 的 CSS 变量中。
+- 纯 HTML + CSS + 原生 JavaScript（ES modules），无框架、无打包工具、无运行时依赖，`npm test` 只依赖 Node 内置的 `node:test` 与 `node:assert`。
+- 不改变原有目录结构与技术栈；新增文件均为静态页面、ES module 或 Node 内置模块脚本。
+- 所有配色与间距集中在 `styles/main.css` 的 CSS 变量中；视觉上以不同左边框与来源徽标区分 `agent` / `tool` / `event`。
+- 所有来自轨迹数据的文本通过 `textContent` 写入，JSON 用 `<pre><code>` 展示，不做 HTML 注入。
 - 不使用内联 `onclick`；事件通过 `addEventListener` 绑定。
-- 窄屏（< 768px）下导航折叠为可展开菜单，页面内容单列。
-- 所有交互元素有可见的键盘焦点样式，并提供“跳到主要内容”链接。
+- 窄屏（< 768px）下导航折叠为可展开菜单，页面内容单列；交互元素有可见焦点样式与“跳到主要内容”链接。
+- 测试不依赖网络、时区或当前时间；轨迹时间统一以 UTC 文本展示，便于截图复现。
 
 ## 许可证
 

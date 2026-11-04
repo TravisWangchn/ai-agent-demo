@@ -22,3 +22,9 @@ jobs:
 
       - name: Run unit tests
         run: npm test
+
+      - name: Generate demo snapshots
+        run: npm run snapshots
+
+      - name: Verify snapshots are committed
+        run: git diff --exit-code -- tests/snapshots

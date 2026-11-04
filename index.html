@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="零依赖、零构建的 AI Agent 教学演示站：用四个页面拆解 Agent 如何触发、评估、决策、执行与交付。">
-  <title>AI Agent 教学演示 · 从 Issue 到 PR</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="Super-Agent 工单自动化编排与全链路可观测教学演示站：用五个页面拆解工单从触发、拆解、工具调用到分支与汇总的七层执行轨迹，并提供可单步回放的标准样例。">
+  <title>Super-Agent 工单自动化编排演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='28' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -13,11 +13,11 @@
 
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="AI Agent Demo 首页">
-        <span class="brand__mark" aria-hidden="true">AI</span>
+      <a class="brand" href="index.html" aria-label="Super-Agent 工单编排演示首页">
+        <span class="brand__mark" aria-hidden="true">SA</span>
         <span class="brand__text">
-          <span class="brand__name">AI Agent Demo</span>
-          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+          <span class="brand__name">Super-Agent 工单编排演示</span>
+          <span class="brand__tagline">全链路可观测教学演示</span>
         </span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
@@ -29,6 +29,7 @@
           <li><a class="site-nav__link" href="index.html" aria-current="page">首页</a></li>
           <li><a class="site-nav__link" href="pages/architecture.html">架构</a></li>
           <li><a class="site-nav__link" href="pages/demo.html">演示</a></li>
+          <li><a class="site-nav__link" href="pages/trace.html">轨迹</a></li>
           <li><a class="site-nav__link" href="pages/rules.html">规则</a></li>
         </ul>
       </nav>
@@ -39,21 +40,25 @@
     <div class="container">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero__content">
-          <span class="eyebrow">AI Agent 教学演示</span>
-          <h1 class="display-title" id="hero-title">从一个 Issue，看懂 AI Agent 如何工作</h1>
-          <p class="lead">这个项目把一次真实的 Agent 工作拆成五个阶段：触发、评估、决策、执行、交付。读页面、跑演示、看规则，就能理解它如何判断一个请求该不该做、要做到什么程度。</p>
+          <span class="eyebrow">工单自动化编排 · 全链路可观测</span>
+          <h1 class="display-title" id="hero-title">一张工单，一条可回放、可复盘的执行轨迹</h1>
+          <p class="lead">这个项目不再用写死的规则说明代替真实链路，而是把一次标准工单的执行过程拆成七个可观测层次：工单输入、任务拆解、工具调用、工具返回、决策推理、分支跳转与最终汇总。每一步都带角色、时间戳、输入、输出与决策理由，可以暂停、重置或跳到任意一步逐步复盘。</p>
           <div class="button-row">
-            <a class="button button--primary" href="pages/demo.html">运行交互演示</a>
-            <a class="button button--secondary" href="pages/architecture.html">阅读工作流程</a>
+            <a class="button button--primary" href="pages/trace.html">逐步回放执行轨迹</a>
+            <a class="button button--secondary" href="pages/demo.html">查看标准样例工单</a>
           </div>
           <div class="stat-row">
             <div class="stat">
-              <span class="stat__value">5</span>
-              <span class="stat__label">个清晰阶段</span>
+              <span class="stat__value">7</span>
+              <span class="stat__label">层可观测日志</span>
             </div>
             <div class="stat">
-              <span class="stat__value">4</span>
-              <span class="stat__label">类教学任务</span>
+              <span class="stat__value">5</span>
+              <span class="stat__label">个教学页面</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">2</span>
+              <span class="stat__label">份标准快照</span>
             </div>
             <div class="stat">
               <span class="stat__value">0</span>
@@ -62,28 +67,36 @@
           </div>
         </div>
 
-        <aside class="hero__art" aria-label="Agent 工作流程概览">
-          <p class="hero__art-title">Agent Workflow</p>
+        <aside class="hero__art" aria-label="七层执行轨迹概览">
+          <p class="hero__art-title">Trace Layers · 七层可观测</p>
           <ol class="mini-flow">
             <li class="mini-flow__item">
               <span class="mini-flow__index" aria-hidden="true">01</span>
-              <span>触发 · 收到 Issue 或消息</span>
+              <span>trigger · 工单原始输入</span>
             </li>
             <li class="mini-flow__item">
               <span class="mini-flow__index" aria-hidden="true">02</span>
-              <span>评估 · 收集必要上下文</span>
+              <span>plan · 任务拆解规划</span>
             </li>
             <li class="mini-flow__item">
               <span class="mini-flow__index" aria-hidden="true">03</span>
-              <span>决策 · 匹配规则并判断</span>
+              <span>tool_call · 工具调用请求</span>
             </li>
             <li class="mini-flow__item">
               <span class="mini-flow__index" aria-hidden="true">04</span>
-              <span>执行 · 分支、代码、测试</span>
+              <span>tool_result · 工具返回 Payload</span>
+            </li>
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">05</span>
+              <span>reasoning · Agent 决策推理</span>
+            </li>
+            <li class="mini-flow__item">
+              <span class="mini-flow__index" aria-hidden="true">06</span>
+              <span>branch · 分支跳转与异常处置</span>
             </li>
             <li class="mini-flow__item mini-flow__item--accent">
-              <span class="mini-flow__index" aria-hidden="true">05</span>
-              <span>交付 · PR、证据、复核</span>
+              <span class="mini-flow__index" aria-hidden="true">07</span>
+              <span>summary · 最终汇总输出</span>
             </li>
           </ol>
         </aside>
@@ -91,28 +104,108 @@
 
       <section class="section" aria-labelledby="explore-title">
         <div class="section__head">
-          <h2 class="section__title" id="explore-title">按页面开始探索</h2>
-          <p class="section__hint">三个页面分别回答：怎么工作、如何决策、遵循什么规则。</p>
+          <h2 class="section__title" id="explore-title">五个页面，一条学习路径</h2>
+          <p class="section__hint">首页给出总览；其余四页分别回答：怎么工作、标准案例长什么样、如何逐步回放、依据什么规则。</p>
         </div>
         <div class="card-grid">
           <article class="card">
-            <span class="tag">01 · 流程</span>
+            <span class="tag">01 · 架构</span>
             <h3 class="card__title">Agent 架构</h3>
-            <p class="card__text">拆解触发 → 评估 → 决策 → 执行 → 交付五个阶段，说明每个阶段回答什么问题、输入和产出分别是什么。</p>
-            <a class="card__link" href="pages/architecture.html">查看工作流程</a>
+            <p class="card__text">五阶段工作流、DSH Super-Agent 调用链路、工具与能力依赖关系，以及七层轨迹与架构节点的映射。</p>
+            <a class="card__link" href="pages/architecture.html">阅读架构</a>
           </article>
           <article class="card">
-            <span class="tag">02 · 交互</span>
-            <h3 class="card__title">流程模拟器</h3>
-            <p class="card__text">点击四类任务，实时查看 Agent 匹配哪条规则、是否满足接受条件，以及最终产出什么决策。</p>
-            <a class="card__link" href="pages/demo.html">运行演示</a>
+            <span class="tag">02 · 演示</span>
+            <h3 class="card__title">标准样例工单</h3>
+            <p class="card__text">GitHub Issue #11 的标准样例工单与标准执行轨迹摘要：层覆盖、步骤数、异常分支与最终产出。</p>
+            <a class="card__link" href="pages/demo.html">查看样例</a>
           </article>
           <article class="card">
-            <span class="tag">03 · 规则</span>
+            <span class="tag">03 · 轨迹</span>
+            <h3 class="card__title">执行轨迹回放</h3>
+            <p class="card__text">七层时间线逐步回放：播放 / 暂停、上一步 / 下一步、重置、拖动跳到某一步，plan 子任务可折叠展开。</p>
+            <a class="card__link" href="pages/trace.html">打开轨迹页</a>
+          </article>
+          <article class="card">
+            <span class="tag">04 · 规则</span>
             <h3 class="card__title">策略规则表</h3>
-            <p class="card__text">每条规则都包含适用场景、示例、接受条件与产出；规则数据与页面渲染分离，便于维护。</p>
+            <p class="card__text">四类任务的适用场景、示例、接受条件与执行 / 交付产出；规则命中会出现在轨迹的 reasoning 与 branch 层。</p>
             <a class="card__link" href="pages/rules.html">查看规则表</a>
           </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="layers-title">
+        <div class="section__head">
+          <h2 class="section__title" id="layers-title">七个层次，消掉执行的“黑盒感”</h2>
+          <p class="section__hint">标准轨迹数据在 <code>scripts/trace-data.js</code>，快照落在 <code>tests/snapshots/</code>，页面只负责渲染与回放。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <span class="tag">01 · trigger</span>
+            <h3 class="card__title">工单原始输入</h3>
+            <p class="card__text">Issue 标题、正文、来源、提交者与时间戳，是整条轨迹唯一的输入证据。</p>
+          </article>
+          <article class="card">
+            <span class="tag">02 · plan</span>
+            <h3 class="card__title">任务拆解规划</h3>
+            <p class="card__text">把工单拆成带依赖顺序的子任务，并标注每个子任务由哪个工具承接。</p>
+          </article>
+          <article class="card">
+            <span class="tag">03 · tool_call</span>
+            <h3 class="card__title">工具调用请求</h3>
+            <p class="card__text">逐字记录下发的命令与参数：命令、工作目录、文件路径，不做概述改写。</p>
+          </article>
+          <article class="card">
+            <span class="tag">04 · tool_result</span>
+            <h3 class="card__title">工具返回 Payload</h3>
+            <p class="card__text">工具返回的原始摘录：退出码、耗时与关键输出；失败结果同样保留，不粉饰。</p>
+          </article>
+          <article class="card">
+            <span class="tag">05 · reasoning</span>
+            <h3 class="card__title">Agent 决策推理</h3>
+            <p class="card__text">判定结论、依据说明与规则命中项，回答“为什么走这一步”。</p>
+          </article>
+          <article class="card">
+            <span class="tag">06 · branch</span>
+            <h3 class="card__title">分支跳转</h3>
+            <p class="card__text">记录正常推进或异常处置的来源节点、目标节点与处理方式。</p>
+          </article>
+          <article class="card">
+            <span class="tag">07 · summary</span>
+            <h3 class="card__title">最终汇总输出</h3>
+            <p class="card__text">整体结论、产出物清单与后续动作，形成可复盘的闭环交付。</p>
+          </article>
+        </div>
+        <p class="note"><strong>标准样例：</strong>样例工单来自 <a href="https://github.com/TravisWangchn/ai-agent-demo/issues/11">GitHub Issue #11</a>，标准轨迹完整走完触发 → 评估 → 拆解 → 工具调用 → 异常分支 → 汇总，并随测试产出 JSON 快照供逐字节复现。</p>
+      </section>
+
+      <section class="section" aria-labelledby="playback-title">
+        <div class="section__head">
+          <h2 class="section__title" id="playback-title">回放、暂停、跳到某一步</h2>
+          <p class="section__hint">全部回放交互在 <a href="pages/trace.html">执行轨迹页</a>；页面无 JavaScript 时仍保留静态工单说明。</p>
+        </div>
+        <div class="field-guide">
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>播放 / 暂停</code><span>自动回放</span></h3>
+            <p class="field-guide__text">自动回放每 1.2 秒推进一步，到达末尾时自动暂停；按钮状态与步数文案同步更新。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>上一步 / 下一步</code><span>单步</span></h3>
+            <p class="field-guide__text">逐条前进或回退，到达边界时保持不动；计数显示“当前步 / 总步数”。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>重置</code><span>从头开始</span></h3>
+            <p class="field-guide__text">回到第 1 步并停止播放，重新开始一次复盘。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>seek</code><span>跳到某一步</span></h3>
+            <p class="field-guide__text">拖动滑杆立即定位到目标步骤，只展示该步及之前的轨迹。</p>
+          </div>
+          <div class="field-guide__card">
+            <h3 class="field-guide__term"><code>plan 子任务</code><span>折叠展开</span></h3>
+            <p class="field-guide__text">plan 层的每个子任务可展开，查看挂在它下面的 tool_call 与 tool_result，理解依赖关系。</p>
+          </div>
         </div>
       </section>
 
@@ -121,15 +214,17 @@
           <h2 class="section__title" id="quickstart-title">本地运行与测试</h2>
           <p class="section__hint">项目保持零依赖、零构建。页面脚本使用原生 ES modules，请通过静态服务器访问。</p>
           <div class="button-row">
-            <a class="button button--primary" href="pages/demo.html">先看看演示</a>
+            <a class="button button--primary" href="pages/trace.html">先看标准执行轨迹</a>
           </div>
-          <pre><code># 启动本地静态服务器（任选一种）
-python -m http.server 8000
-npx serve .
+          <pre><code># 运行单元测试，并校验 / 产出标准快照
+npm test
 
-# 运行单元测试
-npm test</code></pre>
-          <p class="note">现代浏览器会阻止 <code>file://</code> 下加载 ES module，因此导航菜单、规则表和交互演示需要静态服务器；直接双击 <code>index.html</code> 仍可查看 HTML 与样式。</p>
+# 重新生成标准样例工单与标准执行轨迹快照
+npm run snapshots
+
+# 启动零依赖静态服务器（默认 http://localhost:8000）
+npm run serve</code></pre>
+          <p class="note">现代浏览器会阻止 <code>file://</code> 下加载 ES module，因此导航菜单、规则表、轨迹回放与快照摘要都需要静态服务器；直接双击 <code>index.html</code> 仍可查看 HTML 与样式。完整使用说明见仓库中的 <code>docs/guide.md</code>。</p>
         </div>
         <div class="panel">
           <h3 class="card__title">项目结构</h3>
@@ -137,15 +232,29 @@ npm test</code></pre>
 ├── pages/
 │   ├── architecture.html
 │   ├── demo.html
+│   ├── trace.html
 │   └── rules.html
 ├── styles/main.css
 ├── scripts/
 │   ├── main.js
 │   ├── demo.js
-│   └── rules.js
+│   ├── rules.js
+│   ├── trace-data.js
+│   ├── trace-playback.js
+│   ├── trace-render.js
+│   ├── trace-page.js
+│   ├── generate-snapshots.js
+│   └── serve.js
 ├── tests/
 │   ├── demo.test.js
-│   └── rules.test.js
+│   ├── rules.test.js
+│   ├── trace.test.js
+│   ├── snapshots.test.js
+│   └── snapshots/
+│       ├── sample-ticket.json
+│       └── sample-trace.json
+├── docs/
+│   └── guide.md
 ├── .github/workflows/ci.yml
 ├── package.json
 ├── README.md
@@ -158,7 +267,7 @@ npm test</code></pre>
 
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p>Super-Agent 工单自动化编排演示 · 零依赖、零构建的教学演示项目</p>
       <p class="site-footer__meta">
         <span>MIT License</span>
         <span>无需框架，无需打包</span>

@@ -1,5 +1,8 @@
 /**
- * 演示页的 Agent 流程模拟器。
+ * 标准样例工单页的“教学对照”流程模拟器。
+ *
+ * 它只演示规则匹配与接受判定，不执行命令、不读写文件；真实的工具调用与原始
+ * 返回记录在 scripts/trace-data.js 中，可在 pages/trace.html 逐步回放。
  *
  * 纯逻辑部分（TASKS / simulateTask）不依赖 DOM，可在 node:test 中直接测试；
  * 页面交互由 initDemo 在浏览器中绑定。
@@ -8,7 +11,7 @@
 import { getRuleByTaskType } from "./rules.js";
 
 /**
- * 演示页提供的四类任务。
+ * 标准样例工单页提供的四类教学对照任务。
  *
  * facts 描述请求中实际给出的信息，规则通过 requirements 逐项检查；
  * 缺少任一条件时，任务不会被接受。
@@ -19,7 +22,7 @@ export const TASKS = [
     type: "copy",
     label: "抄写修正",
     request:
-      "把首页主标题中的「AI Agent 教学演示」改为「AI Agent 教学演示站」，其余文字保持不变。",
+      "把首页主标题中的「工单编排演示」改为「工单自动化编排演示」，其余文字保持不变。",
     facts: {
       exactTarget: true,
       replacement: true,
@@ -288,7 +291,7 @@ function renderSimulation(root, simulation) {
 }
 
 /**
- * 绑定演示页的按钮与结果区域。
+ * 绑定标准样例工单页“教学对照”区的按钮与结果区域。
  * @param {ParentNode} root
  */
 export function initDemo(root = document) {

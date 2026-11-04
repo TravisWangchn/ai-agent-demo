@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="交互式 AI Agent 流程模拟器：选择抄写修正、视觉调整、Bug 修复或新增功能，查看规则匹配、接受判定与最终决策。">
-  <title>交互演示 · AI Agent 教学演示</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="Super-Agent 工单自动化编排演示的标准样例工单与执行轨迹摘要，并提供四类任务的简化模拟器作为教学对照。">
+  <title>标准样例工单 · Super-Agent 工单自动化编排演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='28' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
@@ -13,11 +13,11 @@
 
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="../index.html" aria-label="AI Agent Demo 首页">
-        <span class="brand__mark" aria-hidden="true">AI</span>
+      <a class="brand" href="../index.html" aria-label="Super-Agent 工单编排演示首页">
+        <span class="brand__mark" aria-hidden="true">SA</span>
         <span class="brand__text">
-          <span class="brand__name">AI Agent Demo</span>
-          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+          <span class="brand__name">Super-Agent 工单编排演示</span>
+          <span class="brand__tagline">全链路可观测教学演示</span>
         </span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
@@ -29,25 +29,64 @@
           <li><a class="site-nav__link" href="../index.html">首页</a></li>
           <li><a class="site-nav__link" href="architecture.html">架构</a></li>
           <li><a class="site-nav__link" href="demo.html" aria-current="page">演示</a></li>
+          <li><a class="site-nav__link" href="trace.html">轨迹</a></li>
           <li><a class="site-nav__link" href="rules.html">规则</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id="main" class="site-main">
+  <main id="main" class="site-main" data-demo-page>
     <div class="container">
       <header class="prose">
-        <span class="eyebrow">交互演示</span>
-        <h1 class="page-title">同一个流程，四种不同的决策</h1>
-        <p class="lead">选择一个任务类型，模拟器会展示完整的五阶段：触发请求、匹配规则、逐项检查接受条件、给出决策，最后说明执行与交付动作。所有逻辑都在浏览器本地运行。</p>
+        <span class="eyebrow">标准样例工单</span>
+        <h1 class="page-title">一张工单，一条可复盘的轨迹</h1>
+        <p class="lead">本页展示标准样例工单与它的标准执行轨迹摘要：七层日志覆盖、步骤总数、异常分支与最终产出，都来自仓库中随测试落库的快照数据。完整链路请进入执行轨迹页逐步回放。</p>
+        <div class="meta-pills" aria-label="页面内容">
+          <span class="pill">标准工单</span>
+          <span class="pill">轨迹摘要</span>
+          <span class="pill">异常分支</span>
+          <span class="pill">教学对照模拟器</span>
+        </div>
+        <div class="button-row">
+          <a class="button button--primary" href="trace.html">打开全链路执行轨迹</a>
+          <a class="button button--secondary" href="rules.html">查看策略规则</a>
+        </div>
       </header>
+
+      <section class="section" aria-labelledby="sample-ticket-title">
+        <div class="section__head">
+          <h2 class="section__title" id="sample-ticket-title">标准样例工单</h2>
+          <p class="section__hint">由 <code>scripts/trace-data.js</code> 的 <code>SAMPLE_TICKET</code> 渲染，与快照文件保持同源</p>
+        </div>
+        <div class="panel trace-host" data-demo-ticket>
+          <p class="trace-placeholder">正在加载标准样例工单…</p>
+        </div>
+        <noscript>
+          <p class="noscript-note">工单卡由 JavaScript 渲染。启用 JavaScript 并通过静态服务器访问后即可查看完整内容。</p>
+        </noscript>
+      </section>
+
+      <section class="section" aria-labelledby="sample-trace-title">
+        <div class="section__head">
+          <h2 class="section__title" id="sample-trace-title">标准执行轨迹摘要</h2>
+          <p class="section__hint">摘要只做导航，不替代原始轨迹；每一步的 input / output 原文在轨迹页</p>
+        </div>
+        <div class="panel trace-host" data-demo-summary>
+          <p class="trace-placeholder">正在加载轨迹摘要…</p>
+        </div>
+        <div class="button-row">
+          <a class="button button--primary" href="trace.html">逐步回放这条轨迹</a>
+        </div>
+      </section>
 
       <section class="section panel" data-demo aria-labelledby="simulator-title">
         <div class="section__head">
-          <h2 class="section__title" id="simulator-title">Agent 流程模拟器</h2>
-          <p class="section__hint">点击任务类型开始；再次点击其他类型可对比结果</p>
+          <h2 class="section__title" id="simulator-title">教学对照：四类任务的简化模拟器</h2>
+          <p class="section__hint">简化模型只演示“规则匹配 → 接受判定 → 决策”，不产生真实工具调用</p>
         </div>
+
+        <p class="simulator-intro">下面的模拟器用于对照理解规则与接受条件：选择任务类型后，页面在本地计算五阶段结果。<strong>它不执行命令、不读写文件</strong>；真实的工具调用与原始返回请看 <a href="trace.html">执行轨迹页</a>。</p>
 
         <div class="task-grid" role="group" aria-label="选择任务类型">
           <button class="task-button" type="button" data-task-id="copy" aria-pressed="false">
@@ -86,19 +125,19 @@
       <section class="section prose" aria-labelledby="reading-title">
         <h2 class="section__title" id="reading-title">怎么读这个演示</h2>
         <ol>
-          <li><strong>规则匹配</strong>：任务类型决定它属于哪条策略，而不是由 Agent 临时发明规则。</li>
-          <li><strong>接受判定</strong>：逐项检查规则要求的信息。任何一项缺失，任务都会停在决策阶段。</li>
-          <li><strong>决策与产出</strong>：接受后才会创建分支、写代码和测试；被拒绝时只产出一条具体的补充规格请求。</li>
-          <li><strong>对比结果</strong>：依次点击四个按钮，注意“视觉调整”和另外三个任务在第三步出现的差异。</li>
+          <li><strong>先看工单与轨迹摘要</strong>：确认触发来源、步骤总数、七层是否覆盖，以及异常分支发生在哪一步。</li>
+          <li><strong>再进轨迹页回放</strong>：用播放/暂停、上一步/下一步和滑杆逐条查看 role / timestamp / input / output / reason。</li>
+          <li><strong>展开 plan 子任务</strong>：在 plan 步骤内展开子任务，查看它下挂的 tool_call 与 tool_result，理解依赖关系。</li>
+          <li><strong>最后用模拟器对照</strong>：四类任务的简化模拟器只演示规则判定；对比它和真实轨迹，就能看出“教学模型”与“真实执行”的差距。</li>
         </ol>
-        <p>规则本身在 <a href="rules.html">策略规则页</a> 中完整列出；五阶段的结构说明在 <a href="architecture.html">架构页</a>。</p>
+        <p>规则本身在 <a href="rules.html">策略规则页</a> 中完整列出；七层轨迹在整体架构中的位置见 <a href="architecture.html">架构页</a>。</p>
       </section>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p>Super-Agent 工单自动化编排演示 · 零依赖、零构建的教学演示项目</p>
       <p class="site-footer__meta">
         <span>MIT License</span>
         <span>无需框架，无需打包</span>
@@ -108,5 +147,20 @@
 
   <script type="module" src="../scripts/main.js"></script>
   <script type="module" src="../scripts/demo.js"></script>
+  <script type="module">
+    // 演示页只读取标准样例数据，复用轨迹渲染模块；不触碰真实工具与网络。
+    import { SAMPLE_TICKET, SAMPLE_TRACE } from "../scripts/trace-data.js";
+    import { renderTicketCard, renderTraceSummary } from "../scripts/trace-render.js";
+
+    const ticketHost = document.querySelector("[data-demo-ticket]");
+    if (ticketHost) {
+      ticketHost.replaceChildren(renderTicketCard(document, SAMPLE_TICKET));
+    }
+
+    const summaryHost = document.querySelector("[data-demo-summary]");
+    if (summaryHost) {
+      summaryHost.replaceChildren(renderTraceSummary(document, SAMPLE_TRACE));
+    }
+  </script>
 </body>
 </html>
