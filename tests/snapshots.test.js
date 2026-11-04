@@ -18,6 +18,17 @@ const SNAPSHOT_HINT =
 /** 上一步比较是否通过；未通过时禁止覆盖已提交快照。 */
 let comparisonPassed = false;
 
+/**
+ * 归一化换行符：把 CRLF / CR 统一成 LF。
+ *
+ * 快照必须逐字节可复现，但平台的默认换行（Windows CRLF / POSIX LF）
+ * 不应导致误报——仓库通过 .gitattributes 把快照固定为 eol=lf，
+ * 这里再做一次归一化，保证即便检出时被改写也不会误判为内容漂移。
+ */
+function normalizeNewlines(text) {
+  return text.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+}
+
 test("serializeSnapshot 输出稳定、可 diff 的 JSON 文本", () => {
   assert.equal(serializeSnapshot({ a: 1 }), '{\n  "a": 1\n}\n');
   assert.equal(serializeSnapshot([]), "[]\n");
@@ -58,7 +69,7 @@ test("已提交快照与当前代码生成结果逐字节一致", () => {
     }
 
     assert.equal(
-      committed,
+      normalizeNewlines(committed),
       serializeSnapshot(value),
       `${fileName} 不一致。${SNAPSHOT_HINT}`,
     );
@@ -88,7 +99,7 @@ test("比较通过后由测试落库快照，且内容可被 JSON 解析", () =>
   const expected = buildSnapshots();
   for (const [fileName, value] of Object.entries(expected)) {
     const content = readFileSync(join(SNAPSHOT_DIR, fileName), "utf8");
-    assert.equal(content, serializeSnapshot(value));
+    assert.equal(normalizeNewlines(content), serializeSnapshot(value));
     assert.ok(content.endsWith("\n"));
 
     const parsed = JSON.parse(content);

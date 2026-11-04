@@ -57,10 +57,12 @@ export function writeSnapshots() {
 
   const written = [];
   for (const [fileName, value] of Object.entries(buildSnapshots())) {
+    // 显式使用 LF：Windows 上默认换行为 CRLF，会让「代码生成结果」与
+    // 「已提交快照」跨平台不一致，进而让 CI 的快照校验必然失败。
     writeFileSync(
       join(SNAPSHOT_DIR, fileName),
       serializeSnapshot(value),
-      "utf8",
+      { encoding: "utf8", newline: "\n" },
     );
     written.push(`tests/snapshots/${fileName}`);
   }
