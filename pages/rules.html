@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Agent 教学演示使用的策略规则表：每条规则包含适用场景、示例、接受条件与执行/交付产出。">
+  <title>策略规则 · AI Agent 教学演示</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232456c7'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html" aria-label="AI Agent Demo 首页">
+        <span class="brand__mark" aria-hidden="true">AI</span>
+        <span class="brand__text">
+          <span class="brand__name">AI Agent Demo</span>
+          <span class="brand__tagline">从 Issue 到 PR 的教学演示</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="打开导航菜单" data-nav-toggle>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span>菜单</span>
+      </button>
+      <nav id="primary-nav" class="site-nav" aria-label="主导航">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="../index.html">首页</a></li>
+          <li><a class="site-nav__link" href="architecture.html">架构</a></li>
+          <li><a class="site-nav__link" href="demo.html">演示</a></li>
+          <li><a class="site-nav__link" href="rules.html" aria-current="page">规则</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <div class="container">
+      <header class="prose">
+        <span class="eyebrow">策略规则</span>
+        <h1 class="page-title">规则决定 Agent 的边界</h1>
+        <p class="lead">规则不是装饰性的说明文档，而是接受任务前必须逐项核对的依据。下面每一条规则都包含适用场景、示例、接受条件，以及接受后的执行与交付产出。</p>
+      </header>
+
+      <section class="section" aria-labelledby="table-title">
+        <div class="section__head">
+          <h2 class="section__title" id="table-title">规则总览</h2>
+          <p class="section__hint">表格由 <code>scripts/rules.js</code> 中的数据渲染；如未显示，请通过静态服务器访问</p>
+        </div>
+        <div class="table-wrap">
+          <table class="rule-table">
+            <caption>四类任务的策略规则、接受条件与产出。接受条件需全部满足，任务才会进入执行阶段。</caption>
+            <thead>
+              <tr>
+                <th scope="col">规则</th>
+                <th scope="col">适用场景</th>
+                <th scope="col">示例</th>
+                <th scope="col">接受条件</th>
+                <th scope="col">产出</th>
+              </tr>
+            </thead>
+            <tbody data-rules-table></tbody>
+          </table>
+        </div>
+        <noscript>
+          <p class="noscript-note">规则表由 JavaScript 渲染。请启用 JavaScript，并通过静态服务器打开本页。</p>
+        </noscript>
+      </section>
+
+      <section class="section prose" aria-labelledby="usage-title">
+        <h2 class="section__title" id="usage-title">规则如何被使用</h2>
+        <ol>
+          <li><strong>先匹配，再判断</strong>：任务类型先决定适用规则，然后才检查这条规则的接受条件。</li>
+          <li><strong>条件必须全部满足</strong>：缺少任意一项，结论就是“要求补充规格”，而不是“先做着看看”。</li>
+          <li><strong>规则约束执行范围</strong>：即使任务被接受，执行与交付也只能覆盖规则描述的范围，不能顺手改造无关模块。</li>
+          <li><strong>规则可以被检验</strong>：规则数据由 <code>node:test</code> 校验完整性，页面也提供可视化演示，方便对照。</li>
+        </ol>
+        <p>想看到规则实际运行的样子，请打开 <a href="demo.html">交互演示</a>；想了解五个阶段的结构，请阅读 <a href="architecture.html">架构说明</a>。</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>AI Agent Demo · 零依赖、零构建的教学演示项目</p>
+      <p class="site-footer__meta">
+        <span>MIT License</span>
+        <span>无需框架，无需打包</span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="../scripts/main.js"></script>
+  <script type="module" src="../scripts/rules.js"></script>
+</body>
+</html>
